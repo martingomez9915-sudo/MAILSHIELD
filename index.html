@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MailShield — Seguridad de Correo con IA</title>
+<title>MailShield — Seguridad de Correo con impulsado por IA</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -29,7 +29,6 @@
     overflow-x: hidden;
   }
 
-  /* GRID BG */
   body::before {
     content: '';
     position: fixed;
@@ -42,7 +41,6 @@
     z-index: 0;
   }
 
-  /* NAV */
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -94,7 +92,6 @@
 
   .nav-cta:hover { background: var(--blue-bright) !important; color: white !important; }
 
-  /* HERO */
   .hero {
     position: relative;
     min-height: 100vh;
@@ -206,7 +203,6 @@
     color: var(--blue-bright);
   }
 
-  /* TERMINAL DEMO */
   .terminal-wrapper {
     margin-top: 80px;
     width: 100%;
@@ -268,7 +264,6 @@
 
   @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-  /* STATS */
   .stats {
     position: relative;
     z-index: 1;
@@ -302,7 +297,6 @@
     font-weight: 600;
   }
 
-  /* SECTION */
   section {
     position: relative;
     z-index: 1;
@@ -337,7 +331,6 @@
     font-weight: 400;
   }
 
-  /* HOW IT WORKS */
   .steps {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -385,7 +378,6 @@
     font-weight: 400;
   }
 
-  /* THREAT LEVELS */
   .threats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -452,7 +444,6 @@
     color: var(--muted);
   }
 
-  /* PRICING */
   .pricing-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -568,7 +559,6 @@
     transform: translateY(-1px);
   }
 
-  /* CTA SECTION */
   .cta-section {
     text-align: center;
     padding: 100px 60px;
@@ -602,7 +592,6 @@
     font-weight: 400;
   }
 
-  /* EMAIL FORM */
   .email-form {
     display: flex;
     gap: 12px;
@@ -627,7 +616,6 @@
   .email-input:focus { border-color: var(--blue); }
   .email-input::placeholder { color: var(--muted); }
 
-  /* FOOTER */
   footer {
     position: relative;
     z-index: 1;
@@ -658,7 +646,6 @@
 
   .footer-links a:hover { color: var(--text); }
 
-  /* ANIMATIONS */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(24px); }
     to { opacity: 1; transform: translateY(0); }
@@ -675,7 +662,6 @@
     transform: translateY(0);
   }
 
-  /* SCAN LINE */
   .scan-line {
     position: absolute;
     left: 0; right: 0;
@@ -695,7 +681,6 @@
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="logo">Mail<span>Shield</span></div>
   <ul>
@@ -706,7 +691,6 @@
   </ul>
 </nav>
 
-<!-- HERO -->
 <div class="hero">
   <div class="scan-line"></div>
 
@@ -729,7 +713,6 @@
     <a href="#como-funciona" class="btn-secondary">Ver como funciona →</a>
   </div>
 
-  <!-- TERMINAL -->
   <div class="terminal-wrapper">
     <div class="terminal">
       <div class="terminal-header">
@@ -758,7 +741,6 @@
   </div>
 </div>
 
-<!-- STATS -->
 <div class="stats">
   <div class="stat">
     <div class="stat-num">100</div>
@@ -778,7 +760,6 @@
   </div>
 </div>
 
-<!-- COMO FUNCIONA -->
 <section id="como-funciona">
   <div class="section-tag">// Como funciona</div>
   <h2>Proteccion en<br>5 pasos simples</h2>
@@ -824,7 +805,6 @@
   </div>
 </section>
 
-<!-- AMENAZAS -->
 <section>
   <div class="section-tag">// Niveles de deteccion</div>
   <h2>Detectamos cada<br>tipo de amenaza</h2>
@@ -864,7 +844,6 @@
   </div>
 </section>
 
-<!-- PRICING -->
 <section id="precios">
   <div class="section-tag">// Precios</div>
   <h2>Simple y transparente</h2>
@@ -882,7 +861,7 @@
         <li><span class="check">✓</span> Deteccion de phishing y fraude</li>
         <li><span class="check">✓</span> Soporte por email</li>
       </ul>
-      <button class="btn-plan">Comenzar →</button>
+      <button class="btn-plan" onclick="sendToEmail('Starter')">Comenzar →</button>
     </div>
 
     <div class="price-card featured">
@@ -898,7 +877,7 @@
         <li><span class="check">✓</span> Dashboard web incluido</li>
         <li><span class="check">✓</span> Soporte por chat</li>
       </ul>
-      <button class="btn-plan featured-btn">Comenzar →</button>
+      <button class="btn-plan featured-btn" onclick="sendToEmail('Business')">Comenzar →</button>
     </div>
 
     <div class="price-card">
@@ -913,28 +892,26 @@
         <li><span class="check">✓</span> Analisis de adjuntos</li>
         <li><span class="check">✓</span> Soporte dedicado 24/7</li>
       </ul>
-      <button class="btn-plan">Contactar →</button>
+      <button class="btn-plan" onclick="sendToEmail('Enterprise')">Contactar →</button>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
 <div class="cta-section" id="contacto">
   <h2>Protege tu empresa<br><span style="color:var(--blue-bright)">desde hoy</span></h2>
   <p>Empieza gratis. Sin tarjeta de credito. Resultado en minutos.</p>
   <div class="email-form">
-    <input type="email" class="email-input" placeholder="tu@empresa.com">
-    <button class="btn-primary" style="white-space:nowrap">Empezar gratis →</button>
+    <input type="email" class="email-input" id="userEmail" placeholder="tu@empresa.com">
+    <button class="btn-primary" style="white-space:nowrap" onclick="submitForm()">Empezar gratis →</button>
   </div>
   <p style="margin-top:16px; font-size:13px; color:var(--muted)">
     Primer mes gratis · Sin contrato · Cancela cuando quieras
   </p>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <div class="logo">Mail<span>Shield</span></div>
-  <p>© 2026 MailShield · Cali, Colombia · martingomez9915@gmail.com</p>
+  <p>© 2026 MailShield · Cali, Colombia · chatgpt12476543@gmail.com</p>
   <div class="footer-links">
     <a href="#">Privacidad</a>
     <a href="#">Terminos</a>
@@ -943,18 +920,14 @@
 </footer>
 
 <script>
-  // Scroll reveal
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-      }
+      if (e.isIntersecting) e.target.classList.add('visible');
     });
   }, { threshold: 0.1 });
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // Smooth scroll
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       e.preventDefault();
@@ -962,6 +935,23 @@
       if (target) target.scrollIntoView({ behavior: 'smooth' });
     });
   });
+
+  function submitForm() {
+    const email = document.getElementById('userEmail').value.trim();
+    if (!email) {
+      alert('Por favor ingresa tu correo electronico.');
+      return;
+    }
+    const subject = encodeURIComponent('Nueva solicitud MailShield — Empezar gratis');
+    const body = encodeURIComponent('Hola,\n\nMe interesa empezar con MailShield.\n\nMi correo: ' + email + '\n\nPor favor contactenme.');
+    window.location.href = 'mailto:chatgpt12476543@gmail.com?subject=' + subject + '&body=' + body;
+  }
+
+  function sendToEmail(plan) {
+    const subject = encodeURIComponent('Nueva solicitud MailShield — Plan ' + plan);
+    const body = encodeURIComponent('Hola,\n\nMe interesa el plan ' + plan + ' de MailShield.\n\nPor favor contactenme.');
+    window.location.href = 'mailto:chatgpt12476543@gmail.com?subject=' + subject + '&body=' + body;
+  }
 </script>
 </body>
 </html>
