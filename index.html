@@ -229,6 +229,7 @@
   border-radius: 12px;
   overflow: hidden;
   margin-bottom: 0;
+  margin-top: 20px;
 }
 .plan-tab {
   flex: 1;
@@ -266,7 +267,7 @@
 .plan-tab.active .tab-price { color: var(--blue-bright); }
 .plan-tab .tab-badge {
   position: absolute;
-  top: -10px; left: 50%;
+  top: -14px; left: 50%;
   transform: translateX(-50%);
   background: var(--blue);
   color: white;
@@ -275,6 +276,10 @@
   border-radius: 100px;
   letter-spacing: 1px;
   white-space: nowrap;
+  z-index: 2;
+}
+.plan-selector-wrap {
+  padding-top: 20px;
 }
 
 .plan-detail {
@@ -366,6 +371,30 @@
   text-align: left; border-top: 1px solid var(--border); padding-top: 16px;
 }
 </style>
+
+<section style="padding:100px 60px;max-width:900px;margin:auto">
+  <h2>Risk Intelligence en Vivo</h2>
+  <div class="risk-dashboard">
+    <h3>Riesgo Organizacional</h3>
+    <div><strong>Riesgo Global:</strong> <span id="riskPercent">0%</span></div>
+    <div class="risk-bar"><div class="risk-fill" id="riskFill"></div></div>
+    <div class="tipo-riesgo">
+      <div>Phishing: <span id="phishingPercent">0%</span></div>
+      <div>Fraude: <span id="fraudePercent">0%</span></div>
+      <div>Malware: <span id="malwarePercent">0%</span></div>
+    </div>
+    <div class="semaforo">
+      <div class="verde" id="sVerde"></div>
+      <div class="amarillo" id="sAmarillo"></div>
+      <div class="rojo" id="sRojo"></div>
+    </div>
+    <div style="margin-top:20px">
+      <div>RIESGO ORGANIZACIONAL: <span id="orgRisk">-</span></div>
+      <div>USUARIOS EXPUESTOS: <span id="exposed">0</span></div>
+      <div>PROBABILIDAD DE FRAUDE: <span id="fraudProb">0%</span></div>
+    </div>
+  </div>
+</section>
 
 <section id="precios">
   <div class="section-tag">// Precios</div>
@@ -495,6 +524,7 @@
   </div><!-- /plan-selector-wrap -->
 </section>
 
+
 <script>
 function selectPlan(plan) {
   // tabs
@@ -507,30 +537,6 @@ function selectPlan(plan) {
 </script>
 
 
-
-<section style="padding:100px 60px;max-width:900px;margin:auto">
-  <h2>Risk Intelligence en Vivo</h2>
-  <div class="risk-dashboard">
-    <h3>Riesgo Organizacional</h3>
-    <div><strong>Riesgo Global:</strong> <span id="riskPercent">0%</span></div>
-    <div class="risk-bar"><div class="risk-fill" id="riskFill"></div></div>
-    <div class="tipo-riesgo">
-      <div>Phishing: <span id="phishingPercent">0%</span></div>
-      <div>Fraude: <span id="fraudePercent">0%</span></div>
-      <div>Malware: <span id="malwarePercent">0%</span></div>
-    </div>
-    <div class="semaforo">
-      <div class="verde" id="sVerde"></div>
-      <div class="amarillo" id="sAmarillo"></div>
-      <div class="rojo" id="sRojo"></div>
-    </div>
-    <div style="margin-top:20px">
-      <div>RIESGO ORGANIZACIONAL: <span id="orgRisk">-</span></div>
-      <div>USUARIOS EXPUESTOS: <span id="exposed">0</span></div>
-      <div>PROBABILIDAD DE FRAUDE: <span id="fraudProb">0%</span></div>
-    </div>
-  </div>
-</section>
 
 <div class="cta-section" id="contacto">
   <h2>Protege tu empresa<br><span style="color:var(--blue-bright)">desde hoy</span></h2>
