@@ -77,22 +77,6 @@
   .threat-card ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
   .threat-card ul li{font-size:13px;color:var(--muted);padding-left:16px;position:relative;font-weight:400;line-height:1.5;}
   .threat-card ul li::before{content:'→';position:absolute;left:0;color:var(--muted);}
-  .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
-  .price-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:36px 30px;transition:all 0.3s;position:relative;}
-  .price-card:hover{border-color:var(--blue);transform:translateY(-6px);box-shadow:var(--glow);}
-  .price-card.featured{border-color:var(--blue);background:rgba(59,130,246,0.05);box-shadow:var(--glow);}
-  .featured-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--blue);color:white;font-size:11px;font-weight:700;padding:4px 16px;border-radius:100px;letter-spacing:1px;white-space:nowrap;}
-  .plan-name{font-family:'Space Mono',monospace;font-size:13px;color:var(--muted);letter-spacing:2px;margin-bottom:16px;}
-  .price-amount{display:flex;align-items:baseline;gap:6px;margin-bottom:4px;}
-  .price-period{font-size:13px;color:var(--muted);margin-bottom:28px;font-weight:400;}
-  .price-features{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:32px;}
-  .price-features li{font-size:14px;color:var(--muted);display:flex;gap:10px;align-items:flex-start;font-weight:400;}
-  .price-features li .check{color:var(--green);flex-shrink:0;}
-  .btn-plan{width:100%;padding:14px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;border:1px solid var(--border);background:transparent;color:var(--text);font-family:'Syne',sans-serif;text-decoration:none;display:block;text-align:center;}
-  .btn-plan:hover{border-color:var(--blue);color:var(--blue-bright);}
-  .btn-plan.featured-btn{background:var(--blue);border-color:var(--blue);color:white;box-shadow:0 0 20px rgba(59,130,246,0.3);}
-  .btn-plan.featured-btn:hover{background:var(--blue-bright);transform:translateY(-1px);}
-
   /* Stripe badge */
   .stripe-badge{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);opacity:0.6;}
   .stripe-badge svg{width:12px;height:12px;fill:var(--muted);}
@@ -231,80 +215,298 @@
   </div>
 </section>
 
+<style>
+/* ── PLAN SELECTOR ── */
+.plan-selector-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+}
+.plan-tabs {
+  display: flex;
+  gap: 0;
+  background: #0a0f1e;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 0;
+}
+.plan-tab {
+  flex: 1;
+  padding: 18px 12px;
+  cursor: pointer;
+  text-align: center;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all 0.25s;
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+.plan-tab:last-child { border-right: none; }
+.plan-tab:hover { color: var(--text); background: rgba(59,130,246,0.05); }
+.plan-tab.active {
+  background: rgba(59,130,246,0.12);
+  color: var(--blue-bright);
+  box-shadow: inset 0 -3px 0 var(--blue);
+}
+.plan-tab .tab-price {
+  display: block;
+  font-size: 20px;
+  font-weight: 800;
+  color: inherit;
+  margin-top: 4px;
+  letter-spacing: -1px;
+  font-family: 'Syne', sans-serif;
+}
+.plan-tab.active .tab-price { color: var(--blue-bright); }
+.plan-tab .tab-badge {
+  position: absolute;
+  top: -10px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--blue);
+  color: white;
+  font-size: 9px;
+  padding: 3px 10px;
+  border-radius: 100px;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.plan-detail {
+  display: none;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 16px 16px;
+  padding: 40px;
+  animation: fadeDetailIn 0.3s ease;
+}
+.plan-detail.active { display: flex; gap: 48px; align-items: flex-start; }
+@keyframes fadeDetailIn { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+.plan-detail-left { flex: 1; }
+.plan-detail-right { width: 260px; flex-shrink: 0; }
+
+.plan-detail-name {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px; letter-spacing: 4px; color: var(--blue); margin-bottom: 12px;
+}
+.plan-detail-price {
+  font-size: 60px; font-weight: 800; letter-spacing: -3px; line-height: 1;
+  margin-bottom: 4px;
+}
+.plan-detail-price span { font-size: 20px; color: var(--blue-bright); font-weight: 700; letter-spacing: 1px; vertical-align: super; }
+.plan-detail-period { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+.plan-detail-features { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.plan-detail-features li {
+  font-size: 14px; color: var(--muted); display: flex; gap: 10px;
+  align-items: flex-start; line-height: 1.5;
+}
+.plan-detail-features li .ck { color: var(--green); flex-shrink: 0; font-weight: 700; }
+
+.plan-cta-box {
+  background: #030712;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 24px;
+  text-align: center;
+  position: sticky;
+  top: 100px;
+}
+.plan-cta-box .cta-summary {
+  font-size: 13px; color: var(--muted); margin-bottom: 6px;
+  font-family: 'Space Mono', monospace;
+}
+.plan-cta-box .cta-price-big {
+  font-size: 42px; font-weight: 800; letter-spacing: -2px;
+  margin-bottom: 4px; color: var(--text);
+}
+.plan-cta-box .cta-price-big sup { font-size: 16px; color: var(--blue-bright); vertical-align: super; }
+.plan-cta-box .cta-period {
+  font-size: 12px; color: var(--muted); margin-bottom: 24px;
+}
+.btn-checkout {
+  display: block; width: 100%;
+  background: var(--blue); color: white;
+  padding: 15px; border-radius: 8px;
+  font-size: 15px; font-weight: 700;
+  text-decoration: none; text-align: center;
+  transition: all 0.2s;
+  box-shadow: 0 0 24px rgba(59,130,246,0.35);
+  font-family: 'Syne', sans-serif;
+}
+.btn-checkout:hover { background: var(--blue-bright); transform: translateY(-2px); box-shadow: 0 0 40px rgba(59,130,246,0.55); }
+.btn-checkout-contact {
+  display: block; width: 100%;
+  background: transparent; color: var(--text);
+  padding: 15px; border-radius: 8px;
+  font-size: 15px; font-weight: 700;
+  text-decoration: none; text-align: center;
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+  font-family: 'Syne', sans-serif;
+  cursor: pointer;
+}
+.btn-checkout-contact:hover { border-color: var(--blue); color: var(--blue-bright); }
+
+.stripe-trust {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  margin-top: 14px; font-size: 10px; color: var(--muted); opacity: 0.55;
+  font-family: 'Space Mono', monospace;
+}
+.stripe-trust svg { width: 11px; height: 11px; fill: var(--muted); }
+.plan-cta-includes {
+  margin-top: 20px; font-size: 11px; color: var(--muted);
+  font-family: 'Space Mono', monospace; line-height: 1.8;
+  text-align: left; border-top: 1px solid var(--border); padding-top: 16px;
+}
+</style>
+
 <section id="precios">
   <div class="section-tag">// Precios</div>
   <h2>Simple y transparente</h2>
-  <p class="section-desc">Sin contratos anuales. Sin letra pequena. Cancela cuando quieras.</p>
-  <div class="pricing-grid reveal">
+  <p class="section-desc">Elige tu plan y paga directo con Stripe. Sin contratos, cancela cuando quieras.</p>
 
-    <!-- STARTER -->
-    <div class="price-card">
-      <div class="plan-name">STARTER</div>
-      <div class="price-amount">
-        <span style="font-size:52px;font-weight:800;letter-spacing:-2px;">$30</span>
-        <span style="font-size:18px;font-weight:700;color:var(--blue-bright);letter-spacing:2px;">USD</span>
+  <div class="plan-selector-wrap reveal">
+
+    <!-- TABS -->
+    <div class="plan-tabs">
+      <button class="plan-tab active" onclick="selectPlan('starter')">
+        STARTER
+        <span class="tab-price">$30 USD</span>
+      </button>
+      <button class="plan-tab" onclick="selectPlan('business')" style="position:relative;">
+        <span class="tab-badge">MÁS POPULAR</span>
+        BUSINESS
+        <span class="tab-price">$80 USD</span>
+      </button>
+      <button class="plan-tab" onclick="selectPlan('enterprise')">
+        ENTERPRISE
+        <span class="tab-price">$200 USD</span>
+      </button>
+    </div>
+
+    <!-- STARTER DETAIL -->
+    <div class="plan-detail active" id="detail-starter">
+      <div class="plan-detail-left">
+        <div class="plan-detail-name">// STARTER</div>
+        <div class="plan-detail-price">$30<span>USD</span></div>
+        <div class="plan-detail-period">por mes · facturado mensual</div>
+        <ul class="plan-detail-features">
+          <li><span class="ck">✓</span> 100 correos analizados por mes</li>
+          <li><span class="ck">✓</span> 1 cuenta de Gmail conectada</li>
+          <li><span class="ck">✓</span> Informes 2 veces al mes</li>
+          <li><span class="ck">✓</span> Deteccion de phishing y fraude</li>
+          <li><span class="ck">✓</span> Soporte por email</li>
+        </ul>
       </div>
-      <div class="price-period">por mes · facturado mensual</div>
-      <ul class="price-features">
-        <li><span class="check">✓</span> 100 correos analizados/mes</li>
-        <li><span class="check">✓</span> 1 cuenta de Gmail</li>
-        <li><span class="check">✓</span> Informes 2 veces al mes</li>
-        <li><span class="check">✓</span> Deteccion de phishing y fraude</li>
-        <li><span class="check">✓</span> Soporte por email</li>
-      </ul>
-      <a href="https://buy.stripe.com/test_28EdR34kPfF88BM0c604800" target="_blank" class="btn-plan">Comenzar →</a>
-      <div class="stripe-badge">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.591-7.305z"/></svg>
-        Pago seguro con Stripe
+      <div class="plan-detail-right">
+        <div class="plan-cta-box">
+          <div class="cta-summary">PLAN SELECCIONADO</div>
+          <div class="cta-price-big"><sup>$</sup>30</div>
+          <div class="cta-period">USD / mes</div>
+          <a href="https://buy.stripe.com/test_bJe8wJ7x1dx07xIbUO04801" target="_blank" class="btn-checkout">Pagar con Stripe →</a>
+          <div class="stripe-trust">
+            <svg viewBox="0 0 24 24"><path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.591-7.305z"/></svg>
+            Pago seguro con Stripe
+          </div>
+          <div class="plan-cta-includes">
+            ✓ Sin contrato<br>
+            ✓ Cancela cuando quieras<br>
+            ✓ Activo en minutos
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- BUSINESS -->
-    <div class="price-card featured">
-      <div class="featured-badge">MAS POPULAR</div>
-      <div class="plan-name">BUSINESS</div>
-      <div class="price-amount">
-        <span style="font-size:52px;font-weight:800;letter-spacing:-2px;">$80</span>
-        <span style="font-size:18px;font-weight:700;color:var(--blue-bright);letter-spacing:2px;">USD</span>
+    <!-- BUSINESS DETAIL -->
+    <div class="plan-detail" id="detail-business">
+      <div class="plan-detail-left">
+        <div class="plan-detail-name">// BUSINESS</div>
+        <div class="plan-detail-price">$80<span>USD</span></div>
+        <div class="plan-detail-period">por mes · facturado mensual</div>
+        <ul class="plan-detail-features">
+          <li><span class="ck">✓</span> 500 correos analizados por mes</li>
+          <li><span class="ck">✓</span> 1 cuenta de Gmail conectada</li>
+          <li><span class="ck">✓</span> Informes 2 veces al mes</li>
+          <li><span class="ck">✓</span> Alertas en tiempo real</li>
+          <li><span class="ck">✓</span> Dashboard web incluido</li>
+          <li><span class="ck">✓</span> Soporte por chat 24/7</li>
+        </ul>
       </div>
-      <div class="price-period">por mes · facturado mensual</div>
-      <ul class="price-features">
-        <li><span class="check">✓</span> 500 correos analizados/mes</li>
-        <li><span class="check">✓</span> 1 cuenta de Gmail</li>
-        <li><span class="check">✓</span> Informes 2 veces al mes</li>
-        <li><span class="check">✓</span> Alertas en tiempo real</li>
-        <li><span class="check">✓</span> Dashboard web incluido</li>
-        <li><span class="check">✓</span> Soporte por chat 24/7</li>
-      </ul>
-      <a href="https://buy.stripe.com/test_28EdR34kPfF88BM0c604800" target="_blank" class="btn-plan featured-btn">Comenzar →</a>
-      <div class="stripe-badge">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.591-7.305z"/></svg>
-        Pago seguro con Stripe
+      <div class="plan-detail-right">
+        <div class="plan-cta-box">
+          <div class="cta-summary">PLAN SELECCIONADO</div>
+          <div class="cta-price-big"><sup>$</sup>80</div>
+          <div class="cta-period">USD / mes</div>
+          <a href="https://buy.stripe.com/test_3cIbIV2cHakO5pAe2W04802" target="_blank" class="btn-checkout">Pagar con Stripe →</a>
+          <div class="stripe-trust">
+            <svg viewBox="0 0 24 24"><path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.591-7.305z"/></svg>
+            Pago seguro con Stripe
+          </div>
+          <div class="plan-cta-includes">
+            ✓ Sin contrato<br>
+            ✓ Cancela cuando quieras<br>
+            ✓ Activo en minutos
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- ENTERPRISE -->
-    <div class="price-card">
-      <div class="plan-name">ENTERPRISE</div>
-      <div class="price-amount">
-        <span style="font-size:52px;font-weight:800;letter-spacing:-2px;">$200</span>
-        <span style="font-size:18px;font-weight:700;color:var(--blue-bright);letter-spacing:2px;">USD</span>
+    <!-- ENTERPRISE DETAIL -->
+    <div class="plan-detail" id="detail-enterprise">
+      <div class="plan-detail-left">
+        <div class="plan-detail-name">// ENTERPRISE</div>
+        <div class="plan-detail-price">$200<span>USD</span></div>
+        <div class="plan-detail-period">por mes · facturado mensual</div>
+        <ul class="plan-detail-features">
+          <li><span class="ck">✓</span> 2,000 correos analizados por mes</li>
+          <li><span class="ck">✓</span> Usuarios ilimitados</li>
+          <li><span class="ck">✓</span> Informes diarios</li>
+          <li><span class="ck">✓</span> API para integraciones</li>
+          <li><span class="ck">✓</span> Analisis de adjuntos</li>
+          <li><span class="ck">✓</span> Soporte dedicado 24/7</li>
+        </ul>
       </div>
-      <div class="price-period">por mes · facturado mensual</div>
-      <ul class="price-features">
-        <li><span class="check">✓</span> 2,000 correos analizados/mes</li>
-        <li><span class="check">✓</span> Usuarios ilimitados</li>
-        <li><span class="check">✓</span> Informes diarios</li>
-        <li><span class="check">✓</span> API para integraciones</li>
-        <li><span class="check">✓</span> Analisis de adjuntos</li>
-        <li><span class="check">✓</span> Soporte dedicado 24/7</li>
-      </ul>
-      <button class="btn-plan" onclick="sendToEmail('Enterprise')">Contactar →</button>
-      <div class="stripe-badge" style="opacity:0.4;">Cotización personalizada</div>
+      <div class="plan-detail-right">
+        <div class="plan-cta-box">
+          <div class="cta-summary">PLAN SELECCIONADO</div>
+          <div class="cta-price-big"><sup>$</sup>200</div>
+          <div class="cta-period">USD / mes</div>
+          <a href="https://buy.stripe.com/test_fZucMZaJboSf0a5wq04803" target="_blank" class="btn-checkout">Pagar con Stripe →</a>
+          <div class="stripe-trust">
+            <svg viewBox="0 0 24 24"><path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.591-7.305z"/></svg>
+            Pago seguro con Stripe
+          </div>
+          <div class="plan-cta-includes">
+            ✓ Cotización personalizada<br>
+            ✓ Onboarding incluido<br>
+            ✓ Soporte dedicado
+          </div>
+        </div>
+      </div>
     </div>
 
-  </div>
+  </div><!-- /plan-selector-wrap -->
 </section>
+
+<script>
+function selectPlan(plan) {
+  // tabs
+  document.querySelectorAll('.plan-tab').forEach(t => t.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  // details
+  document.querySelectorAll('.plan-detail').forEach(d => d.classList.remove('active'));
+  document.getElementById('detail-' + plan).classList.add('active');
+}
+</script>
+
+
 
 <section style="padding:100px 60px;max-width:900px;margin:auto">
   <h2>Risk Intelligence en Vivo</h2>
