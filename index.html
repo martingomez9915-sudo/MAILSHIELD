@@ -6,6 +6,52 @@
 <title>MailShield — Seguridad de Correo impulsado por IA</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
+  .risk-dashboard{
+margin-top:30px;
+padding:20px;
+border:1px solid #1e293b;
+border-radius:12px;
+background:#020617
+}
+
+.risk-bar{
+height:12px;
+background:#0f172a;
+border-radius:8px;
+overflow:hidden;
+margin:10px 0
+}
+
+.risk-fill{
+height:100%;
+width:0%;
+background:linear-gradient(90deg,#22c55e,#f97316,#ef4444);
+transition:1s
+}
+
+.tipo-riesgo{
+display:flex;
+justify-content:space-between;
+font-size:12px;
+margin-top:10px
+}
+
+.semaforo{
+display:flex;
+gap:10px;
+margin-top:10px
+}
+
+.semaforo div{
+width:14px;
+height:14px;
+border-radius:50%;
+opacity:.2
+}
+
+.verde{background:#22c55e}
+.amarillo{background:#f97316}
+.rojo{background:#ef4444}
   :root {
     --bg: #030712;
     --bg2: #0a0f1e;
@@ -285,52 +331,7 @@
 
   .scan-line { position: absolute; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, rgba(59,130,246,0.6), transparent); animation: scan 3s linear infinite; pointer-events: none; }
   @keyframes scan { 0% { top: 0; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
-  .risk-dashboard{
-margin-top:30px;
-padding:20px;
-border:1px solid #1e293b;
-border-radius:12px;
-background:#020617
-}
-
-.risk-bar{
-height:12px;
-background:#0f172a;
-border-radius:8px;
-overflow:hidden;
-margin:10px 0
-}
-
-.risk-fill{
-height:100%;
-width:0%;
-background:linear-gradient(90deg,#22c55e,#f97316,#ef4444);
-transition:1s
-}
-
-.tipo-riesgo{
-display:flex;
-justify-content:space-between;
-font-size:12px;
-margin-top:10px
-}
-
-.semaforo{
-display:flex;
-gap:10px;
-margin-top:10px
-}
-
-.semaforo div{
-width:14px;
-height:14px;
-border-radius:50%;
-opacity:.2
-}
-
-.verde{background:#22c55e}
-.amarillo{background:#f97316}
-.rojo{background:#ef4444}
+  
 </style>
 </head>
 <body>
