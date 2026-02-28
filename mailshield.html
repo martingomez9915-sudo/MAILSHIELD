@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MailShield — Seguridad de Correo con IA</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #030712;
+    --bg2: #0a0f1e;
+    --blue: #3b82f6;
+    --blue-bright: #60a5fa;
+    --green: #22c55e;
+    --red: #ef4444;
+    --orange: #f97316;
+    --text: #f1f5f9;
+    --muted: #64748b;
+    --border: rgba(59,130,246,0.2);
+    --glow: 0 0 40px rgba(59,130,246,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* GRID BG */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(3,7,18,0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--blue-bright);
+    letter-spacing: -0.5px;
+  }
+
+  .logo span { color: var(--text); }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 40px;
+  }
+
+  nav ul a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+
+  nav ul a:hover { color: var(--text); }
+
+  .nav-cta {
+    background: var(--blue);
+    color: white !important;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-size: 13px !important;
+    transition: background 0.2s !important;
+  }
+
+  .nav-cta:hover { background: var(--blue-bright) !important; color: white !important; }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 60px 80px;
+    text-align: center;
+    z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(59,130,246,0.1);
+    border: 1px solid rgba(59,130,246,0.3);
+    color: var(--blue-bright);
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    padding: 8px 18px;
+    border-radius: 100px;
+    margin-bottom: 40px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .badge-dot {
+    width: 6px; height: 6px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.5); }
+  }
+
+  h1 {
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -3px;
+    margin-bottom: 28px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  h1 .accent {
+    background: linear-gradient(135deg, var(--blue-bright), #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 20px;
+    color: var(--muted);
+    max-width: 580px;
+    line-height: 1.6;
+    margin-bottom: 50px;
+    font-weight: 400;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn-primary {
+    background: var(--blue);
+    color: white;
+    padding: 16px 36px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 0 30px rgba(59,130,246,0.4);
+  }
+
+  .btn-primary:hover {
+    background: var(--blue-bright);
+    transform: translateY(-2px);
+    box-shadow: 0 0 50px rgba(59,130,246,0.6);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    padding: 16px 36px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--blue);
+    color: var(--blue-bright);
+  }
+
+  /* TERMINAL DEMO */
+  .terminal-wrapper {
+    margin-top: 80px;
+    width: 100%;
+    max-width: 760px;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+
+  .terminal {
+    background: #0d1117;
+    border: 1px solid rgba(59,130,246,0.2);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 60px rgba(59,130,246,0.1), 0 40px 80px rgba(0,0,0,0.5);
+  }
+
+  .terminal-header {
+    background: #161b22;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot-red { background: #ff5f57; }
+  .dot-yellow { background: #ffbd2e; }
+  .dot-green { background: #28ca41; }
+
+  .terminal-title {
+    margin-left: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .terminal-body {
+    padding: 24px;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    line-height: 2;
+  }
+
+  .t-muted { color: var(--muted); }
+  .t-blue { color: var(--blue-bright); }
+  .t-green { color: var(--green); }
+  .t-red { color: var(--red); }
+  .t-orange { color: var(--orange); }
+  .t-white { color: var(--text); }
+
+  .cursor {
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background: var(--blue-bright);
+    animation: blink 1s infinite;
+    vertical-align: middle;
+  }
+
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+  /* STATS */
+  .stats {
+    position: relative;
+    z-index: 1;
+    padding: 60px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    background: var(--border);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stat {
+    background: var(--bg);
+    padding: 40px 30px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-size: 52px;
+    font-weight: 800;
+    color: var(--blue-bright);
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 8px;
+    font-weight: 600;
+  }
+
+  /* SECTION */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 100px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--blue);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+
+  .section-desc {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 540px;
+    line-height: 1.6;
+    margin-bottom: 60px;
+    font-weight: 400;
+  }
+
+  /* HOW IT WORKS */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .step {
+    background: var(--bg2);
+    padding: 40px 32px;
+    position: relative;
+    transition: background 0.3s;
+  }
+
+  .step:hover { background: #0f172a; }
+
+  .step-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--blue);
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+  }
+
+  .step-icon {
+    font-size: 32px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .step h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+  }
+
+  .step p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  /* THREAT LEVELS */
+  .threats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .threat-card {
+    border-radius: 12px;
+    padding: 32px;
+    border: 1px solid;
+    transition: transform 0.2s;
+  }
+
+  .threat-card:hover { transform: translateY(-4px); }
+
+  .threat-card.danger {
+    background: rgba(239,68,68,0.05);
+    border-color: rgba(239,68,68,0.3);
+  }
+
+  .threat-card.warning {
+    background: rgba(249,115,22,0.05);
+    border-color: rgba(249,115,22,0.3);
+  }
+
+  .threat-card.safe {
+    background: rgba(34,197,94,0.05);
+    border-color: rgba(34,197,94,0.3);
+  }
+
+  .threat-icon { font-size: 36px; margin-bottom: 16px; display: block; }
+
+  .threat-card h3 {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+
+  .threat-card.danger h3 { color: var(--red); }
+  .threat-card.warning h3 { color: var(--orange); }
+  .threat-card.safe h3 { color: var(--green); }
+
+  .threat-card ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .threat-card ul li {
+    font-size: 13px;
+    color: var(--muted);
+    padding-left: 16px;
+    position: relative;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .threat-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--muted);
+  }
+
+  /* PRICING */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .price-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px 30px;
+    transition: all 0.3s;
+    position: relative;
+  }
+
+  .price-card:hover {
+    border-color: var(--blue);
+    transform: translateY(-6px);
+    box-shadow: var(--glow);
+  }
+
+  .price-card.featured {
+    border-color: var(--blue);
+    background: rgba(59,130,246,0.05);
+    box-shadow: var(--glow);
+  }
+
+  .featured-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--blue);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 16px;
+    border-radius: 100px;
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+
+  .plan-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+  }
+
+  .price {
+    font-size: 52px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .price-period {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 28px;
+    font-weight: 400;
+  }
+
+  .price-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .price-features li {
+    font-size: 14px;
+    color: var(--muted);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-weight: 400;
+  }
+
+  .price-features li .check { color: var(--green); flex-shrink: 0; }
+
+  .btn-plan {
+    width: 100%;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+  }
+
+  .btn-plan:hover {
+    border-color: var(--blue);
+    color: var(--blue-bright);
+  }
+
+  .btn-plan.featured-btn {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: white;
+    box-shadow: 0 0 20px rgba(59,130,246,0.3);
+  }
+
+  .btn-plan.featured-btn:hover {
+    background: var(--blue-bright);
+    transform: translateY(-1px);
+  }
+
+  /* CTA SECTION */
+  .cta-section {
+    text-align: center;
+    padding: 100px 60px;
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-section h2 {
+    font-size: clamp(36px, 5vw, 64px);
+    max-width: 700px;
+    margin: 0 auto 24px;
+  }
+
+  .cta-section p {
+    font-size: 18px;
+    color: var(--muted);
+    margin-bottom: 48px;
+    font-weight: 400;
+  }
+
+  /* EMAIL FORM */
+  .email-form {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .email-input {
+    flex: 1;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 14px 20px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: 'Syne', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .email-input:focus { border-color: var(--blue); }
+  .email-input::placeholder { color: var(--muted); }
+
+  /* FOOTER */
+  footer {
+    position: relative;
+    z-index: 1;
+    padding: 40px 60px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  footer p {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 32px;
+  }
+
+  .footer-links a {
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--text); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* SCAN LINE */
+  .scan-line {
+    position: absolute;
+    left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(59,130,246,0.6), transparent);
+    animation: scan 3s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes scan {
+    0% { top: 0; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Mail<span>Shield</span></div>
+  <ul>
+    <li><a href="#como-funciona">Como funciona</a></li>
+    <li><a href="#precios">Precios</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+    <li><a href="#contacto" class="nav-cta">Empezar gratis</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="scan-line"></div>
+
+  <div class="hero-badge">
+    <span class="badge-dot"></span>
+    IA analizando correos en tiempo real
+  </div>
+
+  <h1>
+    Tu Gmail,<br>
+    <span class="accent">blindado con IA</span>
+  </h1>
+
+  <p class="hero-sub">
+    MailShield analiza tus 100 ultimos correos con Inteligencia Artificial, detecta phishing, fraude y amenazas, y te envia un informe mensual automatico.
+  </p>
+
+  <div class="hero-btns">
+    <a href="#contacto" class="btn-primary">🛡️ Proteger mi correo ahora</a>
+    <a href="#como-funciona" class="btn-secondary">Ver como funciona →</a>
+  </div>
+
+  <!-- TERMINAL -->
+  <div class="terminal-wrapper">
+    <div class="terminal">
+      <div class="terminal-header">
+        <div class="dot dot-red"></div>
+        <div class="dot dot-yellow"></div>
+        <div class="dot dot-green"></div>
+        <span class="terminal-title">mailshield — analisis en progreso</span>
+      </div>
+      <div class="terminal-body">
+        <div><span class="t-muted">$</span> <span class="t-blue">mailshield</span> <span class="t-white">--analizar --correos 100</span></div>
+        <div><span class="t-muted">→ Conectando con Gmail API...</span> <span class="t-green">OK</span></div>
+        <div><span class="t-muted">→ Descargando 100 correos...</span> <span class="t-green">OK</span></div>
+        <div><span class="t-muted">→ Iniciando analisis con Claude AI...</span></div>
+        <div>&nbsp;</div>
+        <div><span class="t-green">[✓]</span> <span class="t-white">Re: Reunion del lunes</span> <span class="t-muted">— SEGURO (score: 2)</span></div>
+        <div><span class="t-green">[✓]</span> <span class="t-white">Factura #4521 adjunta</span> <span class="t-muted">— SEGURO (score: 8)</span></div>
+        <div><span class="t-orange">[⚠]</span> <span class="t-white">Actualiza tus datos bancarios URGENTE</span> <span class="t-orange">— SOSPECHOSO (score: 71)</span></div>
+        <div><span class="t-red">[🚨]</span> <span class="t-white">Verify your account immediately</span> <span class="t-red">— PELIGROSO (score: 96)</span></div>
+        <div><span class="t-green">[✓]</span> <span class="t-white">Newsletter Bancolombia</span> <span class="t-muted">— SEGURO (score: 12)</span></div>
+        <div>&nbsp;</div>
+        <div><span class="t-muted">─────────────────────────────────</span></div>
+        <div><span class="t-blue">RESUMEN:</span> <span class="t-green">96 seguros</span> · <span class="t-orange">3 sospechosos</span> · <span class="t-red">1 peligroso</span></div>
+        <div><span class="t-green">✓ Informe enviado a tu Gmail</span> <span class="cursor"></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat">
+    <div class="stat-num">100</div>
+    <div class="stat-label">Correos analizados por escaneo</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">91%</div>
+    <div class="stat-label">De ataques comienzan por email</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">$30</div>
+    <div class="stat-label">Precio mensual desde</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">100x</div>
+    <div class="stat-label">Mas accesible que la competencia</div>
+  </div>
+</div>
+
+<!-- COMO FUNCIONA -->
+<section id="como-funciona">
+  <div class="section-tag">// Como funciona</div>
+  <h2>Proteccion en<br>5 pasos simples</h2>
+  <p class="section-desc">Sin instalaciones. Sin configuraciones complejas. Solo conecta tu Gmail y nosotros hacemos el resto.</p>
+
+  <div class="steps reveal">
+    <div class="step">
+      <div class="step-num">01 —</div>
+      <span class="step-icon">🔗</span>
+      <h3>Conecta tu Gmail</h3>
+      <p>Autoriza el acceso con tu cuenta Google en un click. Sin contrasenas compartidas.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02 —</div>
+      <span class="step-icon">📥</span>
+      <h3>Descargamos tus correos</h3>
+      <p>El sistema obtiene los ultimos 100 correos de tu bandeja de forma segura.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03 —</div>
+      <span class="step-icon">🤖</span>
+      <h3>IA analiza cada uno</h3>
+      <p>Claude AI examina asunto, remitente y contenido buscando patrones de amenaza.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04 —</div>
+      <span class="step-icon">📊</span>
+      <h3>Genera el informe</h3>
+      <p>Cada correo recibe un nivel de riesgo: Seguro, Sospechoso o Peligroso con explicacion.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">05 —</div>
+      <span class="step-icon">📨</span>
+      <h3>Te llega automatico</h3>
+      <p>El informe completo llega a tu email cada mes. Sin que tengas que hacer nada.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">06 —</div>
+      <span class="step-icon">🔄</span>
+      <h3>Se repite solo</h3>
+      <p>Proteccion continua. Cada mes nuevo analisis automatico sin intervencion.</p>
+    </div>
+  </div>
+</section>
+
+<!-- AMENAZAS -->
+<section>
+  <div class="section-tag">// Niveles de deteccion</div>
+  <h2>Detectamos cada<br>tipo de amenaza</h2>
+  <p class="section-desc">Nuestra IA clasifica cada correo con precision y te explica por que es una amenaza.</p>
+
+  <div class="threats reveal">
+    <div class="threat-card danger">
+      <span class="threat-icon">🚨</span>
+      <h3>PELIGROSO</h3>
+      <ul>
+        <li>Phishing: correos que imitan bancos o empresas</li>
+        <li>Malware: adjuntos o links con codigo malicioso</li>
+        <li>Fraude: solicitudes de transferencias urgentes</li>
+        <li>Robo de identidad: solicitud de datos personales</li>
+      </ul>
+    </div>
+    <div class="threat-card warning">
+      <span class="threat-icon">⚠️</span>
+      <h3>SOSPECHOSO</h3>
+      <ul>
+        <li>Remitentes desconocidos con urgencia inusual</li>
+        <li>Links acortados o dominios raramente vistos</li>
+        <li>Ingenieria social: manipulacion emocional</li>
+        <li>Solicitudes inusuales de informacion</li>
+      </ul>
+    </div>
+    <div class="threat-card safe">
+      <span class="threat-icon">✅</span>
+      <h3>SEGURO</h3>
+      <ul>
+        <li>Remitentes verificados y conocidos</li>
+        <li>Contenido normal sin patrones de amenaza</li>
+        <li>Dominios legitimos y reconocibles</li>
+        <li>Sin solicitudes sospechosas de datos</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="precios">
+  <div class="section-tag">// Precios</div>
+  <h2>Simple y transparente</h2>
+  <p class="section-desc">Sin contratos anuales. Sin letra pequena. Cancela cuando quieras.</p>
+
+  <div class="pricing-grid reveal">
+    <div class="price-card">
+      <div class="plan-name">STARTER</div>
+      <div class="price">$30</div>
+      <div class="price-period">por mes · facturado mensual</div>
+      <ul class="price-features">
+        <li><span class="check">✓</span> 100 correos analizados/mes</li>
+        <li><span class="check">✓</span> 1 cuenta de Gmail</li>
+        <li><span class="check">✓</span> Informe mensual automatico</li>
+        <li><span class="check">✓</span> Deteccion de phishing y fraude</li>
+        <li><span class="check">✓</span> Soporte por email</li>
+      </ul>
+      <button class="btn-plan">Comenzar →</button>
+    </div>
+
+    <div class="price-card featured">
+      <div class="featured-badge">MAS POPULAR</div>
+      <div class="plan-name">BUSINESS</div>
+      <div class="price">$80</div>
+      <div class="price-period">por mes · facturado mensual</div>
+      <ul class="price-features">
+        <li><span class="check">✓</span> 500 correos analizados/mes</li>
+        <li><span class="check">✓</span> Hasta 5 cuentas de Gmail</li>
+        <li><span class="check">✓</span> Informes semanales</li>
+        <li><span class="check">✓</span> Alertas en tiempo real</li>
+        <li><span class="check">✓</span> Dashboard web incluido</li>
+        <li><span class="check">✓</span> Soporte por chat</li>
+      </ul>
+      <button class="btn-plan featured-btn">Comenzar →</button>
+    </div>
+
+    <div class="price-card">
+      <div class="plan-name">ENTERPRISE</div>
+      <div class="price">$200</div>
+      <div class="price-period">por mes · facturado mensual</div>
+      <ul class="price-features">
+        <li><span class="check">✓</span> 2,000 correos analizados/mes</li>
+        <li><span class="check">✓</span> Usuarios ilimitados</li>
+        <li><span class="check">✓</span> Informes diarios</li>
+        <li><span class="check">✓</span> API para integraciones</li>
+        <li><span class="check">✓</span> Analisis de adjuntos</li>
+        <li><span class="check">✓</span> Soporte dedicado 24/7</li>
+      </ul>
+      <button class="btn-plan">Contactar →</button>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section" id="contacto">
+  <h2>Protege tu empresa<br><span style="color:var(--blue-bright)">desde hoy</span></h2>
+  <p>Empieza gratis. Sin tarjeta de credito. Resultado en minutos.</p>
+  <div class="email-form">
+    <input type="email" class="email-input" placeholder="tu@empresa.com">
+    <button class="btn-primary" style="white-space:nowrap">Empezar gratis →</button>
+  </div>
+  <p style="margin-top:16px; font-size:13px; color:var(--muted)">
+    Primer mes gratis · Sin contrato · Cancela cuando quieras
+  </p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">Mail<span>Shield</span></div>
+  <p>© 2026 MailShield · Cali, Colombia · martingomez9915@gmail.com</p>
+  <div class="footer-links">
+    <a href="#">Privacidad</a>
+    <a href="#">Terminos</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
