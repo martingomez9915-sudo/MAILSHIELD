@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MailShield — Seguridad de Correo con impulsado por IA</title>
+<title>MailShield — Seguridad de Correo impulsado por IA</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -55,197 +55,66 @@
     border-bottom: 1px solid var(--border);
   }
 
-  .logo {
-    font-family: 'Space Mono', monospace;
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--blue-bright);
-    letter-spacing: -0.5px;
-  }
-
+  .logo { font-family: 'Space Mono', monospace; font-size: 20px; font-weight: 700; color: var(--blue-bright); letter-spacing: -0.5px; }
   .logo span { color: var(--text); }
 
-  nav ul {
-    list-style: none;
-    display: flex;
-    gap: 40px;
-  }
+  nav ul { list-style: none; display: flex; gap: 40px; }
 
-  nav ul a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    transition: color 0.2s;
-  }
-
+  nav ul a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 600; letter-spacing: 0.5px; transition: color 0.2s; }
   nav ul a:hover { color: var(--text); }
 
-  .nav-cta {
-    background: var(--blue);
-    color: white !important;
-    padding: 10px 24px;
-    border-radius: 6px;
-    font-size: 13px !important;
-    transition: background 0.2s !important;
-  }
-
+  .nav-cta { background: var(--blue); color: white !important; padding: 10px 24px; border-radius: 6px; font-size: 13px !important; transition: background 0.2s !important; }
   .nav-cta:hover { background: var(--blue-bright) !important; color: white !important; }
 
   .hero {
     position: relative;
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
     padding: 120px 60px 80px;
     text-align: center;
     z-index: 1;
   }
 
   .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(59,130,246,0.1);
-    border: 1px solid rgba(59,130,246,0.3);
-    color: var(--blue-bright);
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    padding: 8px 18px;
-    border-radius: 100px;
-    margin-bottom: 40px;
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3);
+    color: var(--blue-bright); font-family: 'Space Mono', monospace; font-size: 12px;
+    padding: 8px 18px; border-radius: 100px; margin-bottom: 40px;
     animation: fadeUp 0.6s ease both;
   }
 
-  .badge-dot {
-    width: 6px; height: 6px;
-    background: var(--green);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
+  .badge-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
 
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(1.5); }
-  }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.5); } }
 
-  h1 {
-    font-size: clamp(48px, 7vw, 88px);
-    font-weight: 800;
-    line-height: 1.0;
-    letter-spacing: -3px;
-    margin-bottom: 28px;
-    animation: fadeUp 0.6s 0.1s ease both;
-  }
+  h1 { font-size: clamp(48px, 7vw, 88px); font-weight: 800; line-height: 1.0; letter-spacing: -3px; margin-bottom: 28px; animation: fadeUp 0.6s 0.1s ease both; }
 
-  h1 .accent {
-    background: linear-gradient(135deg, var(--blue-bright), #818cf8);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
+  h1 .accent { background: linear-gradient(135deg, var(--blue-bright), #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
-  .hero-sub {
-    font-size: 20px;
-    color: var(--muted);
-    max-width: 580px;
-    line-height: 1.6;
-    margin-bottom: 50px;
-    font-weight: 400;
-    animation: fadeUp 0.6s 0.2s ease both;
-  }
+  .hero-sub { font-size: 20px; color: var(--muted); max-width: 580px; line-height: 1.6; margin-bottom: 50px; font-weight: 400; animation: fadeUp 0.6s 0.2s ease both; }
 
-  .hero-btns {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-    animation: fadeUp 0.6s 0.3s ease both;
-  }
+  .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; animation: fadeUp 0.6s 0.3s ease both; }
 
-  .btn-primary {
-    background: var(--blue);
-    color: white;
-    padding: 16px 36px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 700;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: 0 0 30px rgba(59,130,246,0.4);
-  }
+  .btn-primary { background: var(--blue); color: white; padding: 16px 36px; border-radius: 8px; font-size: 16px; font-weight: 700; text-decoration: none; border: none; cursor: pointer; transition: all 0.2s; box-shadow: 0 0 30px rgba(59,130,246,0.4); }
+  .btn-primary:hover { background: var(--blue-bright); transform: translateY(-2px); box-shadow: 0 0 50px rgba(59,130,246,0.6); }
 
-  .btn-primary:hover {
-    background: var(--blue-bright);
-    transform: translateY(-2px);
-    box-shadow: 0 0 50px rgba(59,130,246,0.6);
-  }
+  .btn-secondary { background: transparent; color: var(--text); padding: 16px 36px; border-radius: 8px; font-size: 16px; font-weight: 700; text-decoration: none; border: 1px solid var(--border); cursor: pointer; transition: all 0.2s; }
+  .btn-secondary:hover { border-color: var(--blue); color: var(--blue-bright); }
 
-  .btn-secondary {
-    background: transparent;
-    color: var(--text);
-    padding: 16px 36px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 700;
-    text-decoration: none;
-    border: 1px solid var(--border);
-    cursor: pointer;
-    transition: all 0.2s;
-  }
+  .terminal-wrapper { margin-top: 80px; width: 100%; max-width: 760px; animation: fadeUp 0.6s 0.4s ease both; }
 
-  .btn-secondary:hover {
-    border-color: var(--blue);
-    color: var(--blue-bright);
-  }
+  .terminal { background: #0d1117; border: 1px solid rgba(59,130,246,0.2); border-radius: 12px; overflow: hidden; box-shadow: 0 0 60px rgba(59,130,246,0.1), 0 40px 80px rgba(0,0,0,0.5); }
 
-  .terminal-wrapper {
-    margin-top: 80px;
-    width: 100%;
-    max-width: 760px;
-    animation: fadeUp 0.6s 0.4s ease both;
-  }
-
-  .terminal {
-    background: #0d1117;
-    border: 1px solid rgba(59,130,246,0.2);
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 0 60px rgba(59,130,246,0.1), 0 40px 80px rgba(0,0,0,0.5);
-  }
-
-  .terminal-header {
-    background: #161b22;
-    padding: 14px 20px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-  }
+  .terminal-header { background: #161b22; padding: 14px 20px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); }
 
   .dot { width: 12px; height: 12px; border-radius: 50%; }
   .dot-red { background: #ff5f57; }
   .dot-yellow { background: #ffbd2e; }
   .dot-green { background: #28ca41; }
 
-  .terminal-title {
-    margin-left: 10px;
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    color: var(--muted);
-  }
+  .terminal-title { margin-left: 10px; font-family: 'Space Mono', monospace; font-size: 12px; color: var(--muted); }
 
-  .terminal-body {
-    padding: 24px;
-    font-family: 'Space Mono', monospace;
-    font-size: 13px;
-    line-height: 2;
-  }
+  .terminal-body { padding: 24px; font-family: 'Space Mono', monospace; font-size: 13px; line-height: 2; }
 
   .t-muted { color: var(--muted); }
   .t-blue { color: var(--blue-bright); }
@@ -254,33 +123,21 @@
   .t-orange { color: var(--orange); }
   .t-white { color: var(--text); }
 
-  .cursor {
-    display: inline-block;
-    width: 8px;
-    height: 14px;
-    background: var(--blue-bright);
-    animation: blink 1s infinite;
-    vertical-align: middle;
-  }
+  .cursor { display: inline-block; width: 8px; height: 14px; background: var(--blue-bright); animation: blink 1s infinite; vertical-align: middle; }
 
   @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-  /* ═══ PROBLEM SECTION ═══ */
+  /* PROBLEM */
   .problem-section {
-    position: relative;
-    z-index: 1;
-    padding: 100px 60px;
-    text-align: center;
-    overflow: hidden;
+    position: relative; z-index: 1; padding: 100px 60px;
+    text-align: center; overflow: hidden;
     background: var(--bg);
     border-top: 1px solid rgba(0,255,136,0.08);
     border-bottom: 1px solid rgba(0,255,136,0.08);
   }
 
   .problem-section::before {
-    content: '';
-    position: absolute;
-    top: 50%; left: 50%;
+    content: ''; position: absolute; top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     width: 800px; height: 400px;
     background: radial-gradient(ellipse, rgba(0,255,136,0.04) 0%, transparent 70%);
@@ -288,368 +145,146 @@
   }
 
   .problem-eyebrow {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    color: var(--neon-green);
-    margin-bottom: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    opacity: 0.7;
+    font-family: 'Space Mono', monospace; font-size: 11px;
+    letter-spacing: 5px; text-transform: uppercase; color: var(--neon-green);
+    margin-bottom: 36px; display: flex; align-items: center; justify-content: center;
+    gap: 12px; opacity: 0.7;
   }
 
-  .problem-eyebrow::before,
-  .problem-eyebrow::after {
-    content: '';
-    width: 40px; height: 1px;
-    background: var(--neon-green);
-    opacity: 0.4;
-  }
+  .problem-eyebrow::before, .problem-eyebrow::after { content: ''; width: 40px; height: 1px; background: var(--neon-green); opacity: 0.4; }
 
   .problem-headline {
-    font-family: 'Space Mono', monospace;
-    font-size: clamp(22px, 3.5vw, 42px);
-    font-weight: 700;
-    line-height: 1.3;
-    letter-spacing: -0.5px;
-    max-width: 860px;
-    margin: 0 auto;
-    position: relative;
+    font-family: 'Space Mono', monospace; font-size: clamp(22px, 3.5vw, 42px);
+    font-weight: 700; line-height: 1.3; letter-spacing: -0.5px;
+    max-width: 860px; margin: 0 auto; position: relative;
   }
 
-  .problem-word-static {
-    color: var(--text);
-    opacity: 0.9;
-  }
+  .problem-word-static { color: var(--text); opacity: 0.9; }
 
   .problem-word-neon {
     color: var(--neon-green);
-    text-shadow:
-      0 0 10px rgba(0,255,136,0.9),
-      0 0 30px rgba(0,255,136,0.6),
-      0 0 60px rgba(0,255,136,0.3),
-      0 0 100px rgba(0,255,136,0.15);
+    text-shadow: 0 0 10px rgba(0,255,136,0.9), 0 0 30px rgba(0,255,136,0.6), 0 0 60px rgba(0,255,136,0.3), 0 0 100px rgba(0,255,136,0.15);
     animation: neonFlicker 4s infinite;
   }
 
   @keyframes neonFlicker {
-    0%, 94%, 100% {
-      text-shadow:
-        0 0 10px rgba(0,255,136,0.9),
-        0 0 30px rgba(0,255,136,0.6),
-        0 0 60px rgba(0,255,136,0.3),
-        0 0 100px rgba(0,255,136,0.15);
-      opacity: 1;
-    }
+    0%, 94%, 100% { text-shadow: 0 0 10px rgba(0,255,136,0.9), 0 0 30px rgba(0,255,136,0.6), 0 0 60px rgba(0,255,136,0.3), 0 0 100px rgba(0,255,136,0.15); opacity: 1; }
     95% { opacity: 0.85; text-shadow: none; }
-    96% { opacity: 1;
-      text-shadow:
-        0 0 10px rgba(0,255,136,0.9),
-        0 0 30px rgba(0,255,136,0.6),
-        0 0 60px rgba(0,255,136,0.3);
-    }
+    96% { opacity: 1; text-shadow: 0 0 10px rgba(0,255,136,0.9), 0 0 30px rgba(0,255,136,0.6), 0 0 60px rgba(0,255,136,0.3); }
     97% { opacity: 0.9; }
-    98% { opacity: 1;
-      text-shadow:
-        0 0 10px rgba(0,255,136,0.9),
-        0 0 30px rgba(0,255,136,0.6),
-        0 0 60px rgba(0,255,136,0.3),
-        0 0 100px rgba(0,255,136,0.15);
-    }
+    98% { opacity: 1; text-shadow: 0 0 10px rgba(0,255,136,0.9), 0 0 30px rgba(0,255,136,0.6), 0 0 60px rgba(0,255,136,0.3), 0 0 100px rgba(0,255,136,0.15); }
   }
 
-  .problem-divider {
-    margin: 28px auto;
-    width: 60px; height: 2px;
-    background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
-    box-shadow: 0 0 10px rgba(0,255,136,0.5);
-  }
+  .problem-divider { margin: 28px auto; width: 60px; height: 2px; background: linear-gradient(90deg, transparent, var(--neon-green), transparent); box-shadow: 0 0 10px rgba(0,255,136,0.5); }
 
-  .problem-sub {
-    font-size: 16px;
-    color: var(--muted);
-    max-width: 520px;
-    margin: 0 auto;
-    line-height: 1.7;
-    font-weight: 400;
-  }
-
-  /* ══════════════════════════ */
+  .problem-sub { font-size: 16px; color: var(--muted); max-width: 520px; margin: 0 auto; line-height: 1.7; font-weight: 400; }
 
   .stats {
-    position: relative;
-    z-index: 1;
-    padding: 60px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2px;
-    background: var(--border);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
+    position: relative; z-index: 1; padding: 60px;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 2px; background: var(--border);
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
   }
 
-  .stat {
-    background: var(--bg);
-    padding: 40px 30px;
-    text-align: center;
-  }
+  .stat { background: var(--bg); padding: 40px 30px; text-align: center; }
+  .stat-num { font-size: 52px; font-weight: 800; color: var(--blue-bright); letter-spacing: -2px; line-height: 1; }
+  .stat-label { font-size: 14px; color: var(--muted); margin-top: 8px; font-weight: 600; }
 
-  .stat-num {
-    font-size: 52px;
-    font-weight: 800;
-    color: var(--blue-bright);
-    letter-spacing: -2px;
-    line-height: 1;
-  }
+  section { position: relative; z-index: 1; padding: 100px 60px; max-width: 1200px; margin: 0 auto; }
 
-  .stat-label {
-    font-size: 14px;
-    color: var(--muted);
-    margin-top: 8px;
-    font-weight: 600;
-  }
+  .section-tag { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--blue); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; }
 
-  section {
-    position: relative;
-    z-index: 1;
-    padding: 100px 60px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
+  h2 { font-size: clamp(32px, 4vw, 52px); font-weight: 800; letter-spacing: -2px; line-height: 1.1; margin-bottom: 20px; }
 
-  .section-tag {
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    color: var(--blue);
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-  }
+  .section-desc { font-size: 18px; color: var(--muted); max-width: 540px; line-height: 1.6; margin-bottom: 60px; font-weight: 400; }
 
-  h2 {
-    font-size: clamp(32px, 4vw, 52px);
-    font-weight: 800;
-    letter-spacing: -2px;
-    line-height: 1.1;
-    margin-bottom: 20px;
-  }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
 
-  .section-desc {
-    font-size: 18px;
-    color: var(--muted);
-    max-width: 540px;
-    line-height: 1.6;
-    margin-bottom: 60px;
-    font-weight: 400;
-  }
-
-  .steps {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden;
-  }
-
-  .step {
-    background: var(--bg2);
-    padding: 40px 32px;
-    position: relative;
-    transition: background 0.3s;
-  }
-
+  .step { background: var(--bg2); padding: 40px 32px; position: relative; transition: background 0.3s; }
   .step:hover { background: #0f172a; }
 
-  .step-num {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: var(--blue);
-    letter-spacing: 2px;
-    margin-bottom: 20px;
-  }
+  .step-num { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--blue); letter-spacing: 2px; margin-bottom: 20px; }
+  .step-icon { font-size: 32px; margin-bottom: 16px; display: block; }
+  .step h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; letter-spacing: -0.5px; }
+  .step p { font-size: 14px; color: var(--muted); line-height: 1.6; font-weight: 400; }
 
-  .step-icon {
-    font-size: 32px;
-    margin-bottom: 16px;
-    display: block;
-  }
+  .threats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 
-  .step h3 {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    letter-spacing: -0.5px;
-  }
-
-  .step p {
-    font-size: 14px;
-    color: var(--muted);
-    line-height: 1.6;
-    font-weight: 400;
-  }
-
-  .threats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
-
-  .threat-card {
-    border-radius: 12px;
-    padding: 32px;
-    border: 1px solid;
-    transition: transform 0.2s;
-  }
-
+  .threat-card { border-radius: 12px; padding: 32px; border: 1px solid; transition: transform 0.2s; }
   .threat-card:hover { transform: translateY(-4px); }
-
   .threat-card.danger { background: rgba(239,68,68,0.05); border-color: rgba(239,68,68,0.3); }
   .threat-card.warning { background: rgba(249,115,22,0.05); border-color: rgba(249,115,22,0.3); }
   .threat-card.safe { background: rgba(34,197,94,0.05); border-color: rgba(34,197,94,0.3); }
 
   .threat-icon { font-size: 36px; margin-bottom: 16px; display: block; }
-
   .threat-card h3 { font-size: 22px; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.5px; }
   .threat-card.danger h3 { color: var(--red); }
   .threat-card.warning h3 { color: var(--orange); }
   .threat-card.safe h3 { color: var(--green); }
 
   .threat-card ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-
-  .threat-card ul li {
-    font-size: 13px;
-    color: var(--muted);
-    padding-left: 16px;
-    position: relative;
-    font-weight: 400;
-    line-height: 1.5;
-  }
-
+  .threat-card ul li { font-size: 13px; color: var(--muted); padding-left: 16px; position: relative; font-weight: 400; line-height: 1.5; }
   .threat-card ul li::before { content: '→'; position: absolute; left: 0; color: var(--muted); }
 
+  /* PRICING */
   .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 
-  .price-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 36px 30px;
-    transition: all 0.3s;
-    position: relative;
-  }
-
+  .price-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 36px 30px; transition: all 0.3s; position: relative; }
   .price-card:hover { border-color: var(--blue); transform: translateY(-6px); box-shadow: var(--glow); }
+  .price-card.featured { border-color: var(--blue); background: rgba(59,130,246,0.05); box-shadow: var(--glow); }
 
-  .price-card.featured {
-    border-color: var(--blue);
-    background: rgba(59,130,246,0.05);
-    box-shadow: var(--glow);
-  }
-
-  .featured-badge {
-    position: absolute;
-    top: -12px; left: 50%;
-    transform: translateX(-50%);
-    background: var(--blue);
-    color: white;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 4px 16px;
-    border-radius: 100px;
-    letter-spacing: 1px;
-    white-space: nowrap;
-  }
+  .featured-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--blue); color: white; font-size: 11px; font-weight: 700; padding: 4px 16px; border-radius: 100px; letter-spacing: 1px; white-space: nowrap; }
 
   .plan-name { font-family: 'Space Mono', monospace; font-size: 13px; color: var(--muted); letter-spacing: 2px; margin-bottom: 16px; }
-  .price { font-size: 52px; font-weight: 800; letter-spacing: -2px; line-height: 1; margin-bottom: 4px; }
+
+  .price-amount {
+    display: flex; align-items: baseline; gap: 6px; margin-bottom: 4px;
+  }
+
+  .price-value { font-size: 52px; font-weight: 800; letter-spacing: -2px; line-height: 1; }
+  .price-value sup { font-size: 20px; font-weight: 700; color: var(--blue-bright); letter-spacing: 1px; vertical-align: super; margin-left: 4px; }
+
+  .price-currency {
+    font-family: 'Space Mono', monospace;
+    font-size: 18px; font-weight: 700;
+    color: var(--blue-bright);
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
   .price-period { font-size: 13px; color: var(--muted); margin-bottom: 28px; font-weight: 400; }
 
   .price-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
-
   .price-features li { font-size: 14px; color: var(--muted); display: flex; gap: 10px; align-items: flex-start; font-weight: 400; }
   .price-features li .check { color: var(--green); flex-shrink: 0; }
 
-  .btn-plan {
-    width: 100%; padding: 14px; border-radius: 8px; font-size: 15px; font-weight: 700;
-    cursor: pointer; transition: all 0.2s; border: 1px solid var(--border);
-    background: transparent; color: var(--text); font-family: 'Syne', sans-serif;
-  }
-
+  .btn-plan { width: 100%; padding: 14px; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s; border: 1px solid var(--border); background: transparent; color: var(--text); font-family: 'Syne', sans-serif; }
   .btn-plan:hover { border-color: var(--blue); color: var(--blue-bright); }
-
-  .btn-plan.featured-btn {
-    background: var(--blue); border-color: var(--blue); color: white;
-    box-shadow: 0 0 20px rgba(59,130,246,0.3);
-  }
-
+  .btn-plan.featured-btn { background: var(--blue); border-color: var(--blue); color: white; box-shadow: 0 0 20px rgba(59,130,246,0.3); }
   .btn-plan.featured-btn:hover { background: var(--blue-bright); transform: translateY(-1px); }
 
-  .cta-section {
-    text-align: center; padding: 100px 60px;
-    position: relative; z-index: 1;
-    border-top: 1px solid var(--border);
-  }
-
-  .cta-section::before {
-    content: ''; position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
+  .cta-section { text-align: center; padding: 100px 60px; position: relative; z-index: 1; border-top: 1px solid var(--border); }
+  .cta-section::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%); pointer-events: none; }
   .cta-section h2 { font-size: clamp(36px, 5vw, 64px); max-width: 700px; margin: 0 auto 24px; }
   .cta-section p { font-size: 18px; color: var(--muted); margin-bottom: 48px; font-weight: 400; }
 
   .email-form { display: flex; gap: 12px; justify-content: center; max-width: 480px; margin: 0 auto; }
-
-  .email-input {
-    flex: 1; background: var(--bg2); border: 1px solid var(--border);
-    color: var(--text); padding: 14px 20px; border-radius: 8px;
-    font-size: 15px; font-family: 'Syne', sans-serif; outline: none; transition: border-color 0.2s;
-  }
-
+  .email-input { flex: 1; background: var(--bg2); border: 1px solid var(--border); color: var(--text); padding: 14px 20px; border-radius: 8px; font-size: 15px; font-family: 'Syne', sans-serif; outline: none; transition: border-color 0.2s; }
   .email-input:focus { border-color: var(--blue); }
   .email-input::placeholder { color: var(--muted); }
 
-  footer {
-    position: relative; z-index: 1; padding: 40px 60px;
-    border-top: 1px solid var(--border);
-    display: flex; justify-content: space-between; align-items: center;
-  }
-
+  footer { position: relative; z-index: 1; padding: 40px 60px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
   footer p { font-size: 13px; color: var(--muted); font-weight: 400; }
-
   .footer-links { display: flex; gap: 32px; }
-
   .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
   .footer-links a:hover { color: var(--text); }
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
   .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
-  .scan-line {
-    position: absolute; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(59,130,246,0.6), transparent);
-    animation: scan 3s linear infinite; pointer-events: none;
-  }
-
-  @keyframes scan {
-    0% { top: 0; opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { top: 100%; opacity: 0; }
-  }
+  .scan-line { position: absolute; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, rgba(59,130,246,0.6), transparent); animation: scan 3s linear infinite; pointer-events: none; }
+  @keyframes scan { 0% { top: 0; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
 </style>
 </head>
 <body>
@@ -670,13 +305,8 @@
     <span class="badge-dot"></span>
     IA analizando correos en tiempo real
   </div>
-  <h1>
-    Tu Gmail,<br>
-    <span class="accent">blindado con IA</span>
-  </h1>
-  <p class="hero-sub">
-    MailShield analiza tus 100 ultimos correos con Inteligencia Artificial, detecta phishing, fraude y amenazas, y te envia un informe mensual automatico.
-  </p>
+  <h1>Tu Gmail,<br><span class="accent">blindado con IA</span></h1>
+  <p class="hero-sub">MailShield analiza tus 100 ultimos correos con Inteligencia Artificial, detecta phishing, fraude y amenazas, y te envia un informe mensual automatico.</p>
   <div class="hero-btns">
     <a href="#contacto" class="btn-primary">🛡️ Proteger mi correo ahora</a>
     <a href="#como-funciona" class="btn-secondary">Ver como funciona →</a>
@@ -709,7 +339,6 @@
   </div>
 </div>
 
-<!-- ═══ PROBLEM SECTION ═══ -->
 <div class="problem-section reveal">
   <div class="problem-eyebrow">El Problema</div>
   <h2 class="problem-headline">
@@ -720,65 +349,23 @@
 </div>
 
 <div class="stats">
-  <div class="stat">
-    <div class="stat-num">100</div>
-    <div class="stat-label">Correos analizados por escaneo</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num">91%</div>
-    <div class="stat-label">De ataques comienzan por email</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num">$30</div>
-    <div class="stat-label">Precio mensual desde</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num">100x</div>
-    <div class="stat-label">Mas accesible que la competencia</div>
-  </div>
+  <div class="stat"><div class="stat-num">100</div><div class="stat-label">Correos analizados por escaneo</div></div>
+  <div class="stat"><div class="stat-num">91%</div><div class="stat-label">De ataques comienzan por email</div></div>
+  <div class="stat"><div class="stat-num">$30</div><div class="stat-label">Precio mensual desde (USD)</div></div>
+  <div class="stat"><div class="stat-num">100x</div><div class="stat-label">Mas accesible que la competencia</div></div>
 </div>
 
 <section id="como-funciona">
   <div class="section-tag">// Como funciona</div>
-  <h2>Proteccion en<br>5 pasos simples</h2>
+  <h2>Proteccion en<br>6 pasos simples</h2>
   <p class="section-desc">Sin instalaciones. Sin configuraciones complejas. Solo conecta tu Gmail y nosotros hacemos el resto.</p>
   <div class="steps reveal">
-    <div class="step">
-      <div class="step-num">01 —</div>
-      <span class="step-icon">🔗</span>
-      <h3>Conecta tu Gmail</h3>
-      <p>Autoriza el acceso con tu cuenta Google en un click. Sin contrasenas compartidas.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">02 —</div>
-      <span class="step-icon">📥</span>
-      <h3>Descargamos tus correos</h3>
-      <p>El sistema obtiene los ultimos 100 correos de tu bandeja de forma segura.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">03 —</div>
-      <span class="step-icon">🤖</span>
-      <h3>IA analiza cada uno</h3>
-      <p>Claude AI examina asunto, remitente y contenido buscando patrones de amenaza.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">04 —</div>
-      <span class="step-icon">📊</span>
-      <h3>Genera el informe</h3>
-      <p>Cada correo recibe un nivel de riesgo: Seguro, Sospechoso o Peligroso con explicacion.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">05 —</div>
-      <span class="step-icon">📨</span>
-      <h3>Te llega automatico</h3>
-      <p>El informe completo llega a tu email cada mes. Sin que tengas que hacer nada.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">06 —</div>
-      <span class="step-icon">🔄</span>
-      <h3>Se repite solo</h3>
-      <p>Proteccion continua. Cada mes nuevo analisis automatico sin intervencion.</p>
-    </div>
+    <div class="step"><div class="step-num">01 —</div><span class="step-icon">🔗</span><h3>Conecta tu Gmail</h3><p>Autoriza el acceso con tu cuenta Google en un click. Sin contrasenas compartidas.</p></div>
+    <div class="step"><div class="step-num">02 —</div><span class="step-icon">📥</span><h3>Descargamos tus correos</h3><p>El sistema obtiene los ultimos 100 correos de tu bandeja de forma segura.</p></div>
+    <div class="step"><div class="step-num">03 —</div><span class="step-icon">🤖</span><h3>IA analiza cada uno</h3><p>Claude AI examina asunto, remitente y contenido buscando patrones de amenaza.</p></div>
+    <div class="step"><div class="step-num">04 —</div><span class="step-icon">📊</span><h3>Genera el informe</h3><p>Cada correo recibe un nivel de riesgo: Seguro, Sospechoso o Peligroso con explicacion.</p></div>
+    <div class="step"><div class="step-num">05 —</div><span class="step-icon">📨</span><h3>Te llega automatico</h3><p>El informe completo llega a tu email cada mes. Sin que tengas que hacer nada.</p></div>
+    <div class="step"><div class="step-num">06 —</div><span class="step-icon">🔄</span><h3>Se repite solo</h3><p>Proteccion continua. Cada mes nuevo analisis automatico sin intervencion.</p></div>
   </div>
 </section>
 
@@ -788,8 +375,7 @@
   <p class="section-desc">Nuestra IA clasifica cada correo con precision y te explica por que es una amenaza.</p>
   <div class="threats reveal">
     <div class="threat-card danger">
-      <span class="threat-icon">🚨</span>
-      <h3>PELIGROSO</h3>
+      <span class="threat-icon">🚨</span><h3>PELIGROSO</h3>
       <ul>
         <li>Phishing: correos que imitan bancos o empresas</li>
         <li>Malware: adjuntos o links con codigo malicioso</li>
@@ -798,8 +384,7 @@
       </ul>
     </div>
     <div class="threat-card warning">
-      <span class="threat-icon">⚠️</span>
-      <h3>SOSPECHOSO</h3>
+      <span class="threat-icon">⚠️</span><h3>SOSPECHOSO</h3>
       <ul>
         <li>Remitentes desconocidos con urgencia inusual</li>
         <li>Links acortados o dominios raramente vistos</li>
@@ -808,8 +393,7 @@
       </ul>
     </div>
     <div class="threat-card safe">
-      <span class="threat-icon">✅</span>
-      <h3>SEGURO</h3>
+      <span class="threat-icon">✅</span><h3>SEGURO</h3>
       <ul>
         <li>Remitentes verificados y conocidos</li>
         <li>Contenido normal sin patrones de amenaza</li>
@@ -825,9 +409,13 @@
   <h2>Simple y transparente</h2>
   <p class="section-desc">Sin contratos anuales. Sin letra pequena. Cancela cuando quieras.</p>
   <div class="pricing-grid reveal">
+
+    <!-- STARTER -->
     <div class="price-card">
       <div class="plan-name">STARTER</div>
-      <div class="price">$30</div>
+      <div class="price-amount">
+        <span class="price-value"><span style="font-size:52px;font-weight:800;letter-spacing:-2px;">$30</span> <span style="font-size:18px;font-weight:700;color:var(--blue-bright);letter-spacing:2px;">USD</span></span>
+      </div>
       <div class="price-period">por mes · facturado mensual</div>
       <ul class="price-features">
         <li><span class="check">✓</span> 100 correos analizados/mes</li>
@@ -838,10 +426,14 @@
       </ul>
       <button class="btn-plan" onclick="sendToEmail('Starter')">Comenzar →</button>
     </div>
+
+    <!-- BUSINESS -->
     <div class="price-card featured">
       <div class="featured-badge">MAS POPULAR</div>
       <div class="plan-name">BUSINESS</div>
-      <div class="price">$80</div>
+      <div class="price-amount">
+        <span class="price-value"><span style="font-size:52px;font-weight:800;letter-spacing:-2px;">$80</span> <span style="font-size:18px;font-weight:700;color:var(--blue-bright);letter-spacing:2px;">USD</span></span>
+      </div>
       <div class="price-period">por mes · facturado mensual</div>
       <ul class="price-features">
         <li><span class="check">✓</span> 500 correos analizados/mes</li>
@@ -853,9 +445,13 @@
       </ul>
       <button class="btn-plan featured-btn" onclick="sendToEmail('Business')">Comenzar →</button>
     </div>
+
+    <!-- ENTERPRISE -->
     <div class="price-card">
       <div class="plan-name">ENTERPRISE</div>
-      <div class="price">$200</div>
+      <div class="price-amount">
+        <span class="price-value"><span style="font-size:52px;font-weight:800;letter-spacing:-2px;">$200</span> <span style="font-size:18px;font-weight:700;color:var(--blue-bright);letter-spacing:2px;">USD</span></span>
+      </div>
       <div class="price-period">por mes · facturado mensual</div>
       <ul class="price-features">
         <li><span class="check">✓</span> 2,000 correos analizados/mes</li>
@@ -867,6 +463,7 @@
       </ul>
       <button class="btn-plan" onclick="sendToEmail('Enterprise')">Contactar →</button>
     </div>
+
   </div>
 </section>
 
@@ -877,9 +474,7 @@
     <input type="email" class="email-input" id="userEmail" placeholder="tu@empresa.com">
     <button class="btn-primary" style="white-space:nowrap" onclick="submitForm()">Empezar ahora →</button>
   </div>
-  <p style="margin-top:16px; font-size:13px; color:var(--muted)">
-    Primer mes · Sin contrato · Cancela cuando quieras
-  </p>
+  <p style="margin-top:16px; font-size:13px; color:var(--muted)">Primer mes · Sin contrato · Cancela cuando quieras</p>
 </div>
 
 <footer>
@@ -894,9 +489,7 @@
 
 <script>
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) e.target.classList.add('visible');
-    });
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.1 });
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
@@ -911,10 +504,7 @@
 
   function submitForm() {
     const email = document.getElementById('userEmail').value.trim();
-    if (!email) {
-      alert('Por favor ingresa tu correo electronico.');
-      return;
-    }
+    if (!email) { alert('Por favor ingresa tu correo electronico.'); return; }
     const subject = encodeURIComponent('Nueva solicitud MailShield — Empezar ahora');
     const body = encodeURIComponent('Hola,\n\nMe interesa empezar con MailShield.\n\nMi correo: ' + email + '\n\nPor favor contactenme.');
     window.location.href = 'mailto:chatgpt12476543@gmail.com?subject=' + subject + '&body=' + body;
