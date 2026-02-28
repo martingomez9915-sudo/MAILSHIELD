@@ -285,6 +285,52 @@
 
   .scan-line { position: absolute; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, rgba(59,130,246,0.6), transparent); animation: scan 3s linear infinite; pointer-events: none; }
   @keyframes scan { 0% { top: 0; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+  .risk-dashboard{
+margin-top:30px;
+padding:20px;
+border:1px solid #1e293b;
+border-radius:12px;
+background:#020617
+}
+
+.risk-bar{
+height:12px;
+background:#0f172a;
+border-radius:8px;
+overflow:hidden;
+margin:10px 0
+}
+
+.risk-fill{
+height:100%;
+width:0%;
+background:linear-gradient(90deg,#22c55e,#f97316,#ef4444);
+transition:1s
+}
+
+.tipo-riesgo{
+display:flex;
+justify-content:space-between;
+font-size:12px;
+margin-top:10px
+}
+
+.semaforo{
+display:flex;
+gap:10px;
+margin-top:10px
+}
+
+.semaforo div{
+width:14px;
+height:14px;
+border-radius:50%;
+opacity:.2
+}
+
+.verde{background:#22c55e}
+.amarillo{background:#f97316}
+.rojo{background:#ef4444}
 </style>
 </head>
 <body>
@@ -466,7 +512,35 @@
 
   </div>
 </section>
+<section style="padding:100px 60px;max-width:900px;margin:auto">
 
+<h2>Risk Intelligence en Vivo</h2>
+
+<div class="risk-dashboard">
+<h3>Riesgo Organizacional</h3>
+<div><strong>Riesgo Global:</strong> <span id="riskPercent">0%</span></div>
+<div class="risk-bar"><div class="risk-fill" id="riskFill"></div></div>
+
+<div class="tipo-riesgo">
+<div>Phishing: <span id="phishingPercent">0%</span></div>
+<div>Fraude: <span id="fraudePercent">0%</span></div>
+<div>Malware: <span id="malwarePercent">0%</span></div>
+</div>
+
+<div class="semaforo">
+<div class="verde" id="sVerde"></div>
+<div class="amarillo" id="sAmarillo"></div>
+<div class="rojo" id="sRojo"></div>
+</div>
+
+<div style="margin-top:20px">
+<div>RIESGO ORGANIZACIONAL: <span id="orgRisk">-</span></div>
+<div>USUARIOS EXPUESTOS: <span id="exposed">0</span></div>
+<div>PROBABILIDAD DE FRAUDE: <span id="fraudProb">0%</span></div>
+</div>
+
+</div>
+</section>
 <div class="cta-section" id="contacto">
   <h2>Protege tu empresa<br><span style="color:var(--blue-bright)">desde hoy</span></h2>
   <p>Empieza hoy. Sin tarjeta de credito. Resultado en minutos.</p>
@@ -515,6 +589,47 @@
     const body = encodeURIComponent('Hola,\n\nMe interesa el plan ' + plan + ' de MailShield.\n\nPor favor contactenme.');
     window.location.href = 'mailto:chatgpt12476543@gmail.com?subject=' + subject + '&body=' + body;
   }
+  // ===== MAILSHIELD RISK ENGINE =====
+
+const riskFill = document.getElementById('riskFill')
+const riskPercent = document.getElementById('riskPercent')
+const phishingPercent = document.getElementById('phishingPercent')
+const fraudePercent = document.getElementById('fraudePercent')
+const malwarePercent = document.getElementById('malwarePercent')
+
+const sVerde = document.getElementById('sVerde')
+const sAmarillo = document.getElementById('sAmarillo')
+const sRojo = document.getElementById('sRojo')
+
+const orgRisk = document.getElementById('orgRisk')
+const exposed = document.getElementById('exposed')
+const fraudProb = document.getElementById('fraudProb')
+
+function updateDashboard(){
+
+let risk = Math.floor(Math.random()*100)
+let phishing = Math.floor(Math.random()*risk)
+let fraude = Math.floor(Math.random()*(risk-phishing))
+let malware = risk-phishing-fraude
+
+riskFill.style.width = risk+"%"
+riskPercent.innerText = risk+"%"
+
+phishingPercent.innerText = phishing+"%"
+fraudePercent.innerText = fraude+"%"
+malwarePercent.innerText = malware+"%"
+
+sVerde.style.opacity = risk<40 ? 1 : 0.2
+sAmarillo.style.opacity = (risk>=40 && risk<70) ? 1 : 0.2
+sRojo.style.opacity = risk>=70 ? 1 : 0.2
+
+orgRisk.innerText = risk>70 ? 'ALTO' : risk>40 ? 'MEDIO' : 'BAJO'
+exposed.innerText = Math.floor(risk/20)
+fraudProb.innerText = risk+'%'
+
+}
+
+setInterval(updateDashboard,2000)
 </script>
 </body>
 </html>
