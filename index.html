@@ -18,6 +18,7 @@
     --muted: #64748b;
     --border: rgba(59,130,246,0.2);
     --glow: 0 0 40px rgba(59,130,246,0.15);
+    --neon-green: #00ff88;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -264,6 +265,120 @@
 
   @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
+  /* ═══ PROBLEM SECTION ═══ */
+  .problem-section {
+    position: relative;
+    z-index: 1;
+    padding: 100px 60px;
+    text-align: center;
+    overflow: hidden;
+    background: var(--bg);
+    border-top: 1px solid rgba(0,255,136,0.08);
+    border-bottom: 1px solid rgba(0,255,136,0.08);
+  }
+
+  .problem-section::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px; height: 400px;
+    background: radial-gradient(ellipse, rgba(0,255,136,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .problem-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--neon-green);
+    margin-bottom: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    opacity: 0.7;
+  }
+
+  .problem-eyebrow::before,
+  .problem-eyebrow::after {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--neon-green);
+    opacity: 0.4;
+  }
+
+  .problem-headline {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(22px, 3.5vw, 42px);
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.5px;
+    max-width: 860px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .problem-word-static {
+    color: var(--text);
+    opacity: 0.9;
+  }
+
+  .problem-word-neon {
+    color: var(--neon-green);
+    text-shadow:
+      0 0 10px rgba(0,255,136,0.9),
+      0 0 30px rgba(0,255,136,0.6),
+      0 0 60px rgba(0,255,136,0.3),
+      0 0 100px rgba(0,255,136,0.15);
+    animation: neonFlicker 4s infinite;
+  }
+
+  @keyframes neonFlicker {
+    0%, 94%, 100% {
+      text-shadow:
+        0 0 10px rgba(0,255,136,0.9),
+        0 0 30px rgba(0,255,136,0.6),
+        0 0 60px rgba(0,255,136,0.3),
+        0 0 100px rgba(0,255,136,0.15);
+      opacity: 1;
+    }
+    95% { opacity: 0.85; text-shadow: none; }
+    96% { opacity: 1;
+      text-shadow:
+        0 0 10px rgba(0,255,136,0.9),
+        0 0 30px rgba(0,255,136,0.6),
+        0 0 60px rgba(0,255,136,0.3);
+    }
+    97% { opacity: 0.9; }
+    98% { opacity: 1;
+      text-shadow:
+        0 0 10px rgba(0,255,136,0.9),
+        0 0 30px rgba(0,255,136,0.6),
+        0 0 60px rgba(0,255,136,0.3),
+        0 0 100px rgba(0,255,136,0.15);
+    }
+  }
+
+  .problem-divider {
+    margin: 28px auto;
+    width: 60px; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
+    box-shadow: 0 0 10px rgba(0,255,136,0.5);
+  }
+
+  .problem-sub {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.7;
+    font-weight: 400;
+  }
+
+  /* ══════════════════════════ */
+
   .stats {
     position: relative;
     z-index: 1;
@@ -393,40 +508,18 @@
 
   .threat-card:hover { transform: translateY(-4px); }
 
-  .threat-card.danger {
-    background: rgba(239,68,68,0.05);
-    border-color: rgba(239,68,68,0.3);
-  }
-
-  .threat-card.warning {
-    background: rgba(249,115,22,0.05);
-    border-color: rgba(249,115,22,0.3);
-  }
-
-  .threat-card.safe {
-    background: rgba(34,197,94,0.05);
-    border-color: rgba(34,197,94,0.3);
-  }
+  .threat-card.danger { background: rgba(239,68,68,0.05); border-color: rgba(239,68,68,0.3); }
+  .threat-card.warning { background: rgba(249,115,22,0.05); border-color: rgba(249,115,22,0.3); }
+  .threat-card.safe { background: rgba(34,197,94,0.05); border-color: rgba(34,197,94,0.3); }
 
   .threat-icon { font-size: 36px; margin-bottom: 16px; display: block; }
 
-  .threat-card h3 {
-    font-size: 22px;
-    font-weight: 800;
-    margin-bottom: 12px;
-    letter-spacing: -0.5px;
-  }
-
+  .threat-card h3 { font-size: 22px; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.5px; }
   .threat-card.danger h3 { color: var(--red); }
   .threat-card.warning h3 { color: var(--orange); }
   .threat-card.safe h3 { color: var(--green); }
 
-  .threat-card ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
+  .threat-card ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
 
   .threat-card ul li {
     font-size: 13px;
@@ -437,18 +530,9 @@
     line-height: 1.5;
   }
 
-  .threat-card ul li::before {
-    content: '→';
-    position: absolute;
-    left: 0;
-    color: var(--muted);
-  }
+  .threat-card ul li::before { content: '→'; position: absolute; left: 0; color: var(--muted); }
 
-  .pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
+  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 
   .price-card {
     background: var(--bg2);
@@ -459,11 +543,7 @@
     position: relative;
   }
 
-  .price-card:hover {
-    border-color: var(--blue);
-    transform: translateY(-6px);
-    box-shadow: var(--glow);
-  }
+  .price-card:hover { border-color: var(--blue); transform: translateY(-6px); box-shadow: var(--glow); }
 
   .price-card.featured {
     border-color: var(--blue);
@@ -473,8 +553,7 @@
 
   .featured-badge {
     position: absolute;
-    top: -12px;
-    left: 50%;
+    top: -12px; left: 50%;
     transform: translateX(-50%);
     background: var(--blue);
     color: white;
@@ -486,164 +565,69 @@
     white-space: nowrap;
   }
 
-  .plan-name {
-    font-family: 'Space Mono', monospace;
-    font-size: 13px;
-    color: var(--muted);
-    letter-spacing: 2px;
-    margin-bottom: 16px;
-  }
+  .plan-name { font-family: 'Space Mono', monospace; font-size: 13px; color: var(--muted); letter-spacing: 2px; margin-bottom: 16px; }
+  .price { font-size: 52px; font-weight: 800; letter-spacing: -2px; line-height: 1; margin-bottom: 4px; }
+  .price-period { font-size: 13px; color: var(--muted); margin-bottom: 28px; font-weight: 400; }
 
-  .price {
-    font-size: 52px;
-    font-weight: 800;
-    letter-spacing: -2px;
-    line-height: 1;
-    margin-bottom: 4px;
-  }
+  .price-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
 
-  .price-period {
-    font-size: 13px;
-    color: var(--muted);
-    margin-bottom: 28px;
-    font-weight: 400;
-  }
-
-  .price-features {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 32px;
-  }
-
-  .price-features li {
-    font-size: 14px;
-    color: var(--muted);
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-    font-weight: 400;
-  }
-
+  .price-features li { font-size: 14px; color: var(--muted); display: flex; gap: 10px; align-items: flex-start; font-weight: 400; }
   .price-features li .check { color: var(--green); flex-shrink: 0; }
 
   .btn-plan {
-    width: 100%;
-    padding: 14px;
-    border-radius: 8px;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--text);
-    font-family: 'Syne', sans-serif;
+    width: 100%; padding: 14px; border-radius: 8px; font-size: 15px; font-weight: 700;
+    cursor: pointer; transition: all 0.2s; border: 1px solid var(--border);
+    background: transparent; color: var(--text); font-family: 'Syne', sans-serif;
   }
 
-  .btn-plan:hover {
-    border-color: var(--blue);
-    color: var(--blue-bright);
-  }
+  .btn-plan:hover { border-color: var(--blue); color: var(--blue-bright); }
 
   .btn-plan.featured-btn {
-    background: var(--blue);
-    border-color: var(--blue);
-    color: white;
+    background: var(--blue); border-color: var(--blue); color: white;
     box-shadow: 0 0 20px rgba(59,130,246,0.3);
   }
 
-  .btn-plan.featured-btn:hover {
-    background: var(--blue-bright);
-    transform: translateY(-1px);
-  }
+  .btn-plan.featured-btn:hover { background: var(--blue-bright); transform: translateY(-1px); }
 
   .cta-section {
-    text-align: center;
-    padding: 100px 60px;
-    position: relative;
-    z-index: 1;
+    text-align: center; padding: 100px 60px;
+    position: relative; z-index: 1;
     border-top: 1px solid var(--border);
   }
 
   .cta-section::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
+    content: ''; position: absolute; top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 600px;
-    height: 600px;
+    width: 600px; height: 600px;
     background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
     pointer-events: none;
   }
 
-  .cta-section h2 {
-    font-size: clamp(36px, 5vw, 64px);
-    max-width: 700px;
-    margin: 0 auto 24px;
-  }
+  .cta-section h2 { font-size: clamp(36px, 5vw, 64px); max-width: 700px; margin: 0 auto 24px; }
+  .cta-section p { font-size: 18px; color: var(--muted); margin-bottom: 48px; font-weight: 400; }
 
-  .cta-section p {
-    font-size: 18px;
-    color: var(--muted);
-    margin-bottom: 48px;
-    font-weight: 400;
-  }
-
-  .email-form {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    max-width: 480px;
-    margin: 0 auto;
-  }
+  .email-form { display: flex; gap: 12px; justify-content: center; max-width: 480px; margin: 0 auto; }
 
   .email-input {
-    flex: 1;
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 14px 20px;
-    border-radius: 8px;
-    font-size: 15px;
-    font-family: 'Syne', sans-serif;
-    outline: none;
-    transition: border-color 0.2s;
+    flex: 1; background: var(--bg2); border: 1px solid var(--border);
+    color: var(--text); padding: 14px 20px; border-radius: 8px;
+    font-size: 15px; font-family: 'Syne', sans-serif; outline: none; transition: border-color 0.2s;
   }
 
   .email-input:focus { border-color: var(--blue); }
   .email-input::placeholder { color: var(--muted); }
 
   footer {
-    position: relative;
-    z-index: 1;
-    padding: 40px 60px;
+    position: relative; z-index: 1; padding: 40px 60px;
     border-top: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: flex; justify-content: space-between; align-items: center;
   }
 
-  footer p {
-    font-size: 13px;
-    color: var(--muted);
-    font-weight: 400;
-  }
+  footer p { font-size: 13px; color: var(--muted); font-weight: 400; }
 
-  .footer-links {
-    display: flex;
-    gap: 32px;
-  }
+  .footer-links { display: flex; gap: 32px; }
 
-  .footer-links a {
-    font-size: 13px;
-    color: var(--muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
+  .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
   .footer-links a:hover { color: var(--text); }
 
   @keyframes fadeUp {
@@ -651,24 +635,13 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.7s ease;
-  }
-
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
 
   .scan-line {
-    position: absolute;
-    left: 0; right: 0;
-    height: 2px;
+    position: absolute; left: 0; right: 0; height: 2px;
     background: linear-gradient(90deg, transparent, rgba(59,130,246,0.6), transparent);
-    animation: scan 3s linear infinite;
-    pointer-events: none;
+    animation: scan 3s linear infinite; pointer-events: none;
   }
 
   @keyframes scan {
@@ -687,32 +660,27 @@
     <li><a href="#como-funciona">Como funciona</a></li>
     <li><a href="#precios">Precios</a></li>
     <li><a href="#contacto">Contacto</a></li>
-    <li><a href="#contacto" class="nav-cta">Empezar gratis</a></li>
+    <li><a href="#contacto" class="nav-cta">Empezar ahora</a></li>
   </ul>
 </nav>
 
 <div class="hero">
   <div class="scan-line"></div>
-
   <div class="hero-badge">
     <span class="badge-dot"></span>
     IA analizando correos en tiempo real
   </div>
-
   <h1>
     Tu Gmail,<br>
     <span class="accent">blindado con IA</span>
   </h1>
-
   <p class="hero-sub">
     MailShield analiza tus 100 ultimos correos con Inteligencia Artificial, detecta phishing, fraude y amenazas, y te envia un informe mensual automatico.
   </p>
-
   <div class="hero-btns">
     <a href="#contacto" class="btn-primary">🛡️ Proteger mi correo ahora</a>
     <a href="#como-funciona" class="btn-secondary">Ver como funciona →</a>
   </div>
-
   <div class="terminal-wrapper">
     <div class="terminal">
       <div class="terminal-header">
@@ -741,6 +709,16 @@
   </div>
 </div>
 
+<!-- ═══ PROBLEM SECTION ═══ -->
+<div class="problem-section reveal">
+  <div class="problem-eyebrow">El Problema</div>
+  <h2 class="problem-headline">
+    <span class="problem-word-static">Los ataques con IA en los emails son muy </span><span class="problem-word-neon">fáciles de generar</span><span class="problem-word-static"> …y muy </span><span class="problem-word-neon">difíciles de detener</span>
+  </h2>
+  <div class="problem-divider"></div>
+  <p class="problem-sub">Cada día se generan millones de correos maliciosos con IA. Tu filtro de spam tradicional no fue diseñado para esto. MailShield sí.</p>
+</div>
+
 <div class="stats">
   <div class="stat">
     <div class="stat-num">100</div>
@@ -764,7 +742,6 @@
   <div class="section-tag">// Como funciona</div>
   <h2>Proteccion en<br>5 pasos simples</h2>
   <p class="section-desc">Sin instalaciones. Sin configuraciones complejas. Solo conecta tu Gmail y nosotros hacemos el resto.</p>
-
   <div class="steps reveal">
     <div class="step">
       <div class="step-num">01 —</div>
@@ -809,7 +786,6 @@
   <div class="section-tag">// Niveles de deteccion</div>
   <h2>Detectamos cada<br>tipo de amenaza</h2>
   <p class="section-desc">Nuestra IA clasifica cada correo con precision y te explica por que es una amenaza.</p>
-
   <div class="threats reveal">
     <div class="threat-card danger">
       <span class="threat-icon">🚨</span>
@@ -848,7 +824,6 @@
   <div class="section-tag">// Precios</div>
   <h2>Simple y transparente</h2>
   <p class="section-desc">Sin contratos anuales. Sin letra pequena. Cancela cuando quieras.</p>
-
   <div class="pricing-grid reveal">
     <div class="price-card">
       <div class="plan-name">STARTER</div>
@@ -863,7 +838,6 @@
       </ul>
       <button class="btn-plan" onclick="sendToEmail('Starter')">Comenzar →</button>
     </div>
-
     <div class="price-card featured">
       <div class="featured-badge">MAS POPULAR</div>
       <div class="plan-name">BUSINESS</div>
@@ -879,7 +853,6 @@
       </ul>
       <button class="btn-plan featured-btn" onclick="sendToEmail('Business')">Comenzar →</button>
     </div>
-
     <div class="price-card">
       <div class="plan-name">ENTERPRISE</div>
       <div class="price">$200</div>
@@ -899,13 +872,13 @@
 
 <div class="cta-section" id="contacto">
   <h2>Protege tu empresa<br><span style="color:var(--blue-bright)">desde hoy</span></h2>
-  <p>Empieza gratis. Sin tarjeta de credito. Resultado en minutos.</p>
+  <p>Empieza hoy. Sin tarjeta de credito. Resultado en minutos.</p>
   <div class="email-form">
     <input type="email" class="email-input" id="userEmail" placeholder="tu@empresa.com">
-    <button class="btn-primary" style="white-space:nowrap" onclick="submitForm()">Empezar gratis →</button>
+    <button class="btn-primary" style="white-space:nowrap" onclick="submitForm()">Empezar ahora →</button>
   </div>
   <p style="margin-top:16px; font-size:13px; color:var(--muted)">
-    Primer mes gratis · Sin contrato · Cancela cuando quieras
+    Primer mes · Sin contrato · Cancela cuando quieras
   </p>
 </div>
 
@@ -942,7 +915,7 @@
       alert('Por favor ingresa tu correo electronico.');
       return;
     }
-    const subject = encodeURIComponent('Nueva solicitud MailShield — Empezar gratis');
+    const subject = encodeURIComponent('Nueva solicitud MailShield — Empezar ahora');
     const body = encodeURIComponent('Hola,\n\nMe interesa empezar con MailShield.\n\nMi correo: ' + email + '\n\nPor favor contactenme.');
     window.location.href = 'mailto:chatgpt12476543@gmail.com?subject=' + subject + '&body=' + body;
   }
